@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Menu } from 'semantic-ui-react';
+import { Container, Grid, Segment, Input } from 'semantic-ui-react';
 import FileBrowser from '../components/FileBrowser';
 import VaultInfo from '../components/VaultInfo';
 import DropZone from '../components/DropZone';
@@ -9,21 +9,28 @@ import MenuBar from '../components/MenuBar';
 
 const AppView = (props) => {
     return (
-        <Container style={{ marginTop: '3em' }}>
+        <Container style={{ marginTop: '1em' }}>
             <MenuBar />
             <Grid columns={2} stackable>
+                <Grid.Column width={12}>
+                    <VaultInfo {...props} />
+                    <FileBrowser {...props} />
+                </Grid.Column>
                 <Grid.Column width={4}>
-                    <UserCard />
-                    <FileInfo {...props} />
-                    <DropZone />
+                    <Segment vertical>
+                        <Input fluid loading={false} icon='search' placeholder='Search...' />
+                    </Segment>
+                    <Segment vertical>
+                        <DropZone />
+                    </Segment>
+                    <Segment vertical>
+                        <FileInfo {...props} />
+                    </Segment>
                 </Grid.Column>
 
-                <Grid.Column width={12}>
-                    <FileBrowser {...props} />
-                    <VaultInfo {...props} />
-                </Grid.Column>
+
             </Grid>
-        </Container>
+        </Container >
     );
 }
 

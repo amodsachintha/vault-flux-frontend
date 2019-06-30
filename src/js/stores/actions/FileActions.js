@@ -14,7 +14,7 @@ const fetchFilesFromVault = () => {
                 type: FileActionTypes.RECEIVE_FILES,
                 files: res.data
             });
-        }, 1000);
+        }, 300);
 
     }).catch(e => {
         console.error(e);
@@ -36,7 +36,7 @@ const fetchFileDetailsFromVault = (id) => {
                 type: FileActionTypes.RECEIVE_FILE_DETAILS,
                 file: res.data
             })
-        }, 500)
+        }, 300)
     }).catch(e => {
         console.error(e);
         dispatcher.dispatch({

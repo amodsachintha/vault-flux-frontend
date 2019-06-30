@@ -10,12 +10,13 @@ class FileBrowser extends Component {
     render() {
         const { onFetchFileDetailsFromVault } = this.props;
         let { files, isLoading } = this.props.fileStore;
+        let { selectedFile } = this.props.selectedFileStore;
         if (files.length && !isLoading) {
             return (
-                <Table striped>
+                <Table striped style={{ 'width': '100%' }} >
                     <FilesTableHeader />
                     <Table.Body>
-                        {files.map(file => <FileRow key={file.id} {...file} clickHandler={onFetchFileDetailsFromVault} />)}
+                        {files.map(file => <FileRow key={file.id} {...file} clickHandler={onFetchFileDetailsFromVault} sf={selectedFile} />)}
                     </Table.Body>
                     <Table.Footer>
                         <Table.Row>
@@ -52,14 +53,12 @@ class FileBrowser extends Component {
         }
 
     }
-
-
 }
 
 const FilesTableHeader = () => {
     return (
         <Table.Header>
-            <Table.Row positive>
+            <Table.Row>
                 <Table.HeaderCell colSpan='3'>Your Vault <Icon name='smile outline' /></Table.HeaderCell>
             </Table.Row>
         </Table.Header>
@@ -68,11 +67,20 @@ const FilesTableHeader = () => {
 
 const FileRow = (props) => {
     let positive = ((props.health.aparts / props.health.tparts) > 0.6) ? true : false
+    let selectedFileId = props.sf.id;
+    let color = '#808B96';
+    let fontWeight = 'normal';
+    if (selectedFileId) {
+        color = selectedFileId === props.id ? '#2C3E50' : '#808B96';
+        fontWeight = selectedFileId === props.id ? 'bold' : 'normal';
+    }
     return (
-        <Table.Row positive={positive} negative={!positive} >
+        <Table.Row positive={positive} negative={!positive}>
             <Table.Cell>
                 <List link>
-                    <List.Item as='a' onClick={() => props.clickHandler(props.id)}><strong><Icon name='file outline' /> {props.filename}</strong></List.Item>
+                    <List.Item as='a' onClick={() => props.clickHandler(props.id)} style={{ 'color': color, 'fontWeight': fontWeight }} >
+                        <Icon name='file outline' /> {props.filename}
+                    </List.Item>
                 </List>
             </Table.Cell>
             <Table.Cell>{Math.round(props.filesize / (1024 * 1024))} MB</Table.Cell>

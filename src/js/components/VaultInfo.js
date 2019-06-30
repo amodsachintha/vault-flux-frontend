@@ -4,7 +4,7 @@ import { Message } from 'semantic-ui-react';
 class VaultInfo extends React.Component {
     render() {
         return (
-            <Message info>
+            <Message info size='small'>
                 <Message.Header>Vault Alpha 0.0.5</Message.Header>
                 <p>Alpha stage preview</p>
             </Message>
