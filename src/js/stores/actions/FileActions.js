@@ -8,9 +8,7 @@ const fetchFilesFromVault = () => {
         type: FileActionTypes.FETCH_FILES
     });
     const url = `${config.host}:${config.port}/files`;
-    console.info(url);
     axios.get(url).then(res => {
-        console.debug(res.data);
         dispatcher.dispatch({
             type: FileActionTypes.RECEIVE_FILES,
             files: res.data

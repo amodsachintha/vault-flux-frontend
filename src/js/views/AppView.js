@@ -8,7 +8,6 @@ const AppView = (props) => {
                 items={[
                     { key: '1', name: 'link-1', content: 'Link', onClick: props.onFetchFilesFromVault },
                     { key: '2', name: 'link-2', content: 'Link' },
-                    { key: '3', name: 'link-3', content: 'Link' },
                 ]}
                 pointing
             />
@@ -42,7 +41,6 @@ const FilesTableHeader = () => {
 };
 
 const FileRow = (props) => {
-    console.log(props);
     return (
         <Table.Row>
             <Table.Cell><Icon name='file outline' /> {props.filename}</Table.Cell>
