@@ -1,0 +1,12 @@
+{
+    "files": [
+      { "id": 3341, "filename": "conf.db", "filesize": 445112235 },
+      { "id": 6521, "filename": "mashup.mp3", "filesize": 4566621 },
+      { "id": 3481, "filename": "youtube-dl.exe", "filesize": 6575221 },
+      { "id": 4589, "filename": "ubuntu-14.04-amd64.iso", "filesize": 56621224578 }
+    ],
+    "comments": [
+      { "id": 1, "body": "some comment", "postId": 1 }
+    ],
+    "profile": { "name": "typicode" }
+  }
