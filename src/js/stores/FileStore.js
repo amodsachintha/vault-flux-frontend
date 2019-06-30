@@ -1,4 +1,4 @@
-import { ReduceStore} from 'flux/utils';
+import { ReduceStore } from 'flux/utils';
 import dispatcher from '../Dispatcher';
 import FileActionTypes from './action_types/FileActionTypes';
 
@@ -7,22 +7,33 @@ class FileStore extends ReduceStore {
         super(dispatcher);
     }
 
-
     getInitialState() {
-        return [];
+        return Object.create({
+            files: {},
+            isLoading: false,
+        });
     }
 
     reduce(state, action) {
         switch (action.type) {
             case FileActionTypes.FETCH_FILES:
-                console.debug(action.type);
-                return state;
+                console.log(action.type);
+                return Object.create({
+                    files: {},
+                    isLoading: true,
+                });
             case FileActionTypes.RECEIVE_FILES:
-                console.debug(action.type);
-                return state = action.files.map(f => f);
+                console.log(action.type);
+                return Object.create({
+                    files: action.files.map(file => file),
+                    isLoading: false
+                });
             case FileActionTypes.FETCH_FILES_ERROR:
-                console.debug(action.type);
-                return state;
+                console.log(action.type);
+                return Object.create({
+                    files: {},
+                    isLoading: false,
+                });
             default:
                 return state;
         }

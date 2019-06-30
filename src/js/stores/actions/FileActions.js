@@ -9,10 +9,13 @@ const fetchFilesFromVault = () => {
     });
     const url = `${config.host}:${config.port}/files`;
     axios.get(url).then(res => {
-        dispatcher.dispatch({
-            type: FileActionTypes.RECEIVE_FILES,
-            files: res.data
-        })
+        setTimeout(() => {
+            dispatcher.dispatch({
+                type: FileActionTypes.RECEIVE_FILES,
+                files: res.data
+            });
+        }, 1000);
+
     }).catch(e => {
         console.error(e);
         dispatcher.dispatch({
@@ -22,6 +25,27 @@ const fetchFilesFromVault = () => {
 
 }
 
+const fetchFileDetailsFromVault = (id) => {
+    dispatcher.dispatch({
+        type: FileActionTypes.FETCH_FILE_DETAILS
+    });
+    const url = `${config.host}:${config.port}/files/${id}`;
+    axios.get(url).then(res => {
+        setTimeout(() => {
+            dispatcher.dispatch({
+                type: FileActionTypes.RECEIVE_FILE_DETAILS,
+                file: res.data
+            })
+        }, 500)
+    }).catch(e => {
+        console.error(e);
+        dispatcher.dispatch({
+            type: FileActionTypes.FETCH_FILE_DETAILS_ERROR
+        })
+    })
+}
+
 export default {
-    fetchFilesFromVault
+    fetchFilesFromVault,
+    fetchFileDetailsFromVault
 }

@@ -1,12 +1,64 @@
 {
-    "files": [
-      { "id": 3341, "filename": "conf.db", "filesize": 445112235 },
-      { "id": 6521, "filename": "mashup.mp3", "filesize": 4566621 },
-      { "id": 3481, "filename": "youtube-dl.exe", "filesize": 6575221 },
-      { "id": 4589, "filename": "ubuntu-14.04-amd64.iso", "filesize": 56621224578 }
-    ],
-    "comments": [
-      { "id": 1, "body": "some comment", "postId": 1 }
-    ],
-    "profile": { "name": "typicode" }
-  }
+  "files": [
+    {
+      "id": 3341,
+      "filename": "conf.db",
+      "filesize": 445112235,
+      "hash": "82d5984c2a2ad4c62caf1dd073b1c91c",
+      "health": {
+        "tparts": 6,
+        "aparts": 5
+      }
+    },
+    {
+      "id": 6521,
+      "filename": "mashup.mp3",
+      "filesize": 4566621,
+      "hash": "9fa97b3ef5ab39313589a4a8b55f2d7b",
+      "health": {
+        "tparts": 6,
+        "aparts": 6
+      }
+    },
+    {
+      "id": 3481,
+      "filename": "youtube-dl.exe",
+      "filesize": 6575221,
+      "hash": "963c7eae37e097e4bfa14a39c7b2f634",
+      "health": {
+        "tparts": 6,
+        "aparts": 4
+      }
+    },
+    {
+      "id": 4589,
+      "filename": "ubuntu-14.04-amd64.iso",
+      "filesize": 1662124578,
+      "hash": "a345d8705c34a867362326f2012e2987",
+      "health": {
+        "tparts": 6,
+        "aparts": 3
+      }
+    },
+    {
+      "id": 33241,
+      "filename": "vaults.mp4",
+      "filesize": 25562235,
+      "hash": "82d5984c2a2ad4c62caf1dd073b1c91c",
+      "health": {
+        "tparts": 6,
+        "aparts": 5
+      }
+    },
+    {
+      "id": 34341,
+      "filename": "data.db",
+      "filesize": 43412235,
+      "hash": "82d5984c2a2ad4c62caf1dd073b1c91c",
+      "health": {
+        "tparts": 6,
+        "aparts": 5
+      }
+    }
+  ]
+}
