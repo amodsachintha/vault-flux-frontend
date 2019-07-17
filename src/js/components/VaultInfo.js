@@ -5,7 +5,7 @@ class VaultInfo extends React.Component {
     render() {
         return (
             <Message info size='small'>
-                <Message.Header>Vault Alpha 0.0.5</Message.Header>
+                <Message.Header>Vault Private Alpha 0.0.5</Message.Header>
                 <p>Alpha stage preview</p>
             </Message>
             // <Card fluid raised >

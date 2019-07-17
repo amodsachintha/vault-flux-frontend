@@ -24,8 +24,9 @@ class FileStore extends ReduceStore {
                 });
             case FileActionTypes.RECEIVE_FILES:
                 console.log(action.type);
+                // console.log(action.files.blocks);
                 return Object.create({
-                    files: action.files.map(file => file),
+                    files: action.files.blocks.map(file => file),
                     isLoading: false
                 });
             case FileActionTypes.FETCH_FILES_ERROR:

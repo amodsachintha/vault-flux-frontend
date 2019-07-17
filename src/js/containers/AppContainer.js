@@ -17,9 +17,10 @@ const getState = () => {
         selectedFileStore: SelectedFileStore.getState(),
 
         onFetchFilesFromVault: FileActions.fetchFilesFromVault,
-        onFetchFileDetailsFromVault: FileActions.fetchFileDetailsFromVault
+        onFetchFileDetailsFromVault: FileActions.fetchFileDetailsFromVault,
+        onDownloadFileFromVault: FileActions.downloadFileFromVault
     }
-}
+};
 
 
 export default Container.createFunctional(AppView, getStores, getState);

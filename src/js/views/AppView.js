@@ -4,7 +4,7 @@ import FileBrowser from '../components/FileBrowser';
 import VaultInfo from '../components/VaultInfo';
 import DropZone from '../components/DropZone';
 import FileInfo from '../components/FileInfo';
-import UserCard from '../components/UserCard';
+// import UserCard from '../components/UserCard';
 import MenuBar from '../components/MenuBar';
 
 const AppView = (props) => {
@@ -32,6 +32,6 @@ const AppView = (props) => {
             </Grid>
         </Container >
     );
-}
+};
 
 export default AppView;

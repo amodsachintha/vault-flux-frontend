@@ -2,6 +2,7 @@ import FileActionTypes from '../action_types/FileActionTypes'
 import dispatcher from '../../Dispatcher';
 import axios from 'axios';
 import config from '../../config';
+import { saveAs } from 'file-saver';
 
 const fetchFilesFromVault = () => {
     dispatcher.dispatch({
@@ -23,13 +24,13 @@ const fetchFilesFromVault = () => {
         })
     })
 
-}
+};
 
 const fetchFileDetailsFromVault = (id) => {
     dispatcher.dispatch({
         type: FileActionTypes.FETCH_FILE_DETAILS
     });
-    const url = `${config.host}:${config.port}/files/${id}`;
+    const url = `${config.host}:${config.port}/file/${id}`;
     axios.get(url).then(res => {
         setTimeout(() => {
             dispatcher.dispatch({
@@ -43,9 +44,22 @@ const fetchFileDetailsFromVault = (id) => {
             type: FileActionTypes.FETCH_FILE_DETAILS_ERROR
         })
     })
-}
+};
+
+const downloadFileFromVault = (index) => {
+    const downloadUrl = `${config.host}:${config.port}/download/file/${index}`;
+    const detailUrl = `${config.host}:${config.port}/file/${index}`;
+    axios.get(detailUrl).then((res) => {
+        let fileName = res.data.file.fileName;
+        console.log(fileName);
+        saveAs(downloadUrl, fileName);
+    });
+
+};
+
 
 export default {
     fetchFilesFromVault,
-    fetchFileDetailsFromVault
+    fetchFileDetailsFromVault,
+    downloadFileFromVault
 }

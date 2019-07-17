@@ -8,15 +8,16 @@ class FileBrowser extends Component {
     }
 
     render() {
-        const { onFetchFileDetailsFromVault } = this.props;
+        const { onFetchFileDetailsFromVault, onDownloadFileFromVault } = this.props;
         let { files, isLoading } = this.props.fileStore;
         let { selectedFile } = this.props.selectedFileStore;
+        console.log(files);
         if (files.length && !isLoading) {
             return (
                 <Table striped style={{ 'width': '100%' }} >
                     <FilesTableHeader />
                     <Table.Body>
-                        {files.map(file => <FileRow key={file.id} {...file} clickHandler={onFetchFileDetailsFromVault} sf={selectedFile} />)}
+                        {files.map(file => <FileRow key={file.index} {...file} clickHandler={onFetchFileDetailsFromVault} downloadHandler={onDownloadFileFromVault} sf={selectedFile} />)}
                     </Table.Body>
                     <Table.Footer>
                         <Table.Row>
@@ -66,27 +67,28 @@ const FilesTableHeader = () => {
 };
 
 const FileRow = (props) => {
-    let positive = ((props.health.aparts / props.health.tparts) > 0.6) ? true : false
-    let selectedFileId = props.sf.id;
+    // let positive = ((props.health.aparts / props.health.tparts) > 0.6);
+    let positive = true;
+    let selectedFileId = props.sf.index;
     let color = '#808B96';
     let fontWeight = 'normal';
     if (selectedFileId) {
-        color = selectedFileId === props.id ? '#2C3E50' : '#808B96';
-        fontWeight = selectedFileId === props.id ? 'bold' : 'normal';
+        color = selectedFileId === props.index ? '#2C3E50' : '#808B96';
+        fontWeight = selectedFileId === props.index ? 'bold' : 'normal';
     }
     return (
         <Table.Row positive={positive} negative={!positive}>
             <Table.Cell>
                 <List link>
-                    <List.Item as='a' onClick={() => props.clickHandler(props.id)} style={{ 'color': color, 'fontWeight': fontWeight }} >
-                        <Icon name='file outline' /> {props.filename}
+                    <List.Item as='a' onClick={() => props.clickHandler(props.index)} style={{ 'color': color, 'fontWeight': fontWeight }} >
+                        <Icon name='file outline' /> {props.file.fileName}
                     </List.Item>
                 </List>
             </Table.Cell>
-            <Table.Cell>{Math.round(props.filesize / (1024 * 1024))} MB</Table.Cell>
+            <Table.Cell>{Math.round(props.file.fileSize / (1024 * 1024))} MB</Table.Cell>
             <Table.Cell textAlign='right'>
-                <Icon onClick={() => { console.log(`Download ${props.filename}`) }} name='download' link disabled={!positive} />
-                <Icon onClick={() => { console.log(`Delete ${props.filename}`) }} name='trash alternate outline' link />
+                <Icon onClick={() => props.downloadHandler(props.index)} name='download' link disabled={!positive} />
+                {/*<Icon onClick={() => { console.log(`Delete ${props.file.fileName}`) }} name='trash alternate outline' link />*/}
             </Table.Cell>
         </Table.Row>
     )
