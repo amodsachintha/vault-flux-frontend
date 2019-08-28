@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Table, Icon, List, Segment, Dimmer, Loader, Image } from 'semantic-ui-react';
+import React, {Component} from 'react';
+import {Table, Icon, List, Segment, Dimmer, Loader, Image} from 'semantic-ui-react';
 
 class FileBrowser extends Component {
 
@@ -8,40 +8,40 @@ class FileBrowser extends Component {
     }
 
     render() {
-        const { onFetchFileDetailsFromVault, onDownloadFileFromVault } = this.props;
-        let { files, isLoading } = this.props.fileStore;
-        let { selectedFile } = this.props.selectedFileStore;
+        const {onFetchFileDetailsFromVault, onDownloadFileFromVault} = this.props;
+        let {files, isLoading} = this.props.fileStore;
+        let {selectedFile} = this.props.selectedFileStore;
         console.log(files);
         if (files.length && !isLoading) {
             return (
-                <Table striped style={{ 'width': '100%' }} >
+                <Table basic style={{'width': '100%'}}>
                     <FilesTableHeader />
                     <Table.Body>
-                        {files.map(file => <FileRow key={file.index} {...file} clickHandler={onFetchFileDetailsFromVault} downloadHandler={onDownloadFileFromVault} sf={selectedFile} />)}
+                        {files.map(file => <FileRow key={file.index} {...file}
+                                                    clickHandler={onFetchFileDetailsFromVault}
+                                                    downloadHandler={onDownloadFileFromVault} sf={selectedFile}/>)}
                     </Table.Body>
                     <Table.Footer>
                         <Table.Row>
-                            <Table.HeaderCell colSpan='3'>{files.length} files</Table.HeaderCell>
+                            <Table.HeaderCell colSpan='4'>{files.length} files</Table.HeaderCell>
                         </Table.Row>
                     </Table.Footer>
                 </Table>
             );
-        }
-        else if (isLoading) {
+        } else if (isLoading) {
             return (
                 <Segment>
                     <Dimmer active inverted>
-                        <Loader inverted content='Loading' />
+                        <Loader inverted content='Loading'/>
                     </Dimmer>
 
-                    <Image src='/images/loader_background.png' />
+                    <Image src='/images/loader_background.png'/>
                 </Segment>
             );
-        }
-        else {
+        } else {
             return (
                 <Table striped compact='very'>
-                    <FilesTableHeader />
+                    <FilesTableHeader/>
                     <Table.Body>
                         <Table.Row positive>
                             <Table.Cell colSpan='3' textAlign='center'>
@@ -60,7 +60,18 @@ const FilesTableHeader = () => {
     return (
         <Table.Header>
             <Table.Row>
-                <Table.HeaderCell colSpan='3'>Your Vault <Icon name='smile outline' /></Table.HeaderCell>
+                <Table.HeaderCell >
+                    Name
+                </Table.HeaderCell>
+                {/*<Table.HeaderCell textAlign='center'>*/}
+                {/*    Owner*/}
+                {/*</Table.HeaderCell>*/}
+                <Table.HeaderCell textAlign='center'>
+                    Size
+                </Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>
+                    Actions
+                </Table.HeaderCell>
             </Table.Row>
         </Table.Header>
     )
@@ -77,21 +88,44 @@ const FileRow = (props) => {
         fontWeight = selectedFileId === props.index ? 'bold' : 'normal';
     }
     return (
-        <Table.Row positive={positive} negative={!positive}>
-            <Table.Cell>
+        <Table.Row>
+            <Table.Cell textAlign='left'>
                 <List link>
-                    <List.Item as='a' onClick={() => props.clickHandler(props.index)} style={{ 'color': color, 'fontWeight': fontWeight }} >
-                        <Icon name='file outline' /> {props.file.fileName}
+                    <List.Item as='a' onClick={() => props.clickHandler(props.index)}
+                               style={{'color': color, 'fontWeight': fontWeight}}>
+                        {getIcon(props.file.mimeType)} {props.file.fileName}
                     </List.Item>
                 </List>
             </Table.Cell>
-            <Table.Cell>{Math.round(props.file.fileSize / (1024 * 1024))} MB</Table.Cell>
-            <Table.Cell textAlign='right'>
-                <Icon onClick={() => props.downloadHandler(props.index)} name='download' link disabled={!positive} />
-                {/*<Icon onClick={() => { console.log(`Delete ${props.file.fileName}`) }} name='trash alternate outline' link />*/}
+            {/*<Table.Cell textAlign='center'>*/}
+            {/*    {props.owner}*/}
+            {/*</Table.Cell>*/}
+            <Table.Cell textAlign='center'>{Math.round(props.file.fileSize / (1024 * 1024))} MB</Table.Cell>
+            <Table.Cell textAlign='center'>
+                <Icon onClick={() => props.downloadHandler(props.index)} name='download' color={'blue'} link disabled={!positive}/>
+                <Icon onClick={() => {}} name='share alternate' color={'green'} link />
+                <Icon onClick={() => { console.log(`Delete ${props.file.fileName}`) }} name='trash alternate outline' color={'red'} link />
             </Table.Cell>
         </Table.Row>
     )
+};
+
+const getIcon = (mime) => {
+    switch (mime) {
+        case 'audio/mpeg':
+            return <Icon name='file audio'/>;
+        case 'text/html':
+            return <Icon name='file text'/>;
+        case 'image/png':
+            return <Icon name='file image'/>;
+        case 'video/mp4':
+        case 'video/x-matroska':
+            return <Icon name='file video'/>;
+        case 'application/pdf':
+            return <Icon name='file pdf'/>;
+        default:
+            return <Icon name='file'/>;
+    }
 };
 
 export default FileBrowser;

@@ -9,7 +9,8 @@ const fetchFilesFromVault = () => {
         type: FileActionTypes.FETCH_FILES
     });
     const url = `${config.host}:${config.port}/files`;
-    axios.get(url).then(res => {
+    const token = localStorage.getItem('token') || 'none';
+    axios.get(url, {headers: {'X-TOKEN': token}}).then(res => {
         setTimeout(() => {
             dispatcher.dispatch({
                 type: FileActionTypes.RECEIVE_FILES,
@@ -31,7 +32,9 @@ const fetchFileDetailsFromVault = (id) => {
         type: FileActionTypes.FETCH_FILE_DETAILS
     });
     const url = `${config.host}:${config.port}/file/${id}`;
-    axios.get(url).then(res => {
+    const token = localStorage.getItem('token') || 'none';
+
+    axios.get(url, {headers: {'X-TOKEN': token}}).then(res => {
         setTimeout(() => {
             dispatcher.dispatch({
                 type: FileActionTypes.RECEIVE_FILE_DETAILS,
@@ -49,7 +52,9 @@ const fetchFileDetailsFromVault = (id) => {
 const downloadFileFromVault = (index) => {
     const downloadUrl = `${config.host}:${config.port}/download/file/${index}`;
     const detailUrl = `${config.host}:${config.port}/file/${index}`;
-    axios.get(detailUrl).then((res) => {
+    const token = localStorage.getItem('token') || 'none';
+
+    axios.get(detailUrl, {headers: {'X-TOKEN': token}}).then((res) => {
         let fileName = res.data.file.fileName;
         console.log(fileName);
         saveAs(downloadUrl, fileName);
