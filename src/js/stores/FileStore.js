@@ -35,6 +35,24 @@ class FileStore extends ReduceStore {
                     files: {},
                     isLoading: false,
                 });
+            case FileActionTypes.DELETE_FILE_REQUEST:
+                console.log(action.type);
+                return Object.create({
+                    files: state.files,
+                    isLoading: true,
+                });
+            case FileActionTypes.DELETE_FILE_SUCCESS:
+                console.log(action.type);
+                return Object.create({
+                    files: state.files,
+                    isLoading: false,
+                });
+            case FileActionTypes.DELETE_FILE_FAIL:
+                console.log(action.type);
+                return Object.create({
+                    files: state.files,
+                    isLoading: false,
+                });
             default:
                 return state;
         }

@@ -18,7 +18,8 @@ const getState = () => {
 
         onFetchFilesFromVault: FileActions.fetchFilesFromVault,
         onFetchFileDetailsFromVault: FileActions.fetchFileDetailsFromVault,
-        onDownloadFileFromVault: FileActions.downloadFileFromVault
+        onDownloadFileFromVault: FileActions.downloadFileFromVault,
+        onDeleteFile: FileActions.deleteFile
     }
 };
 

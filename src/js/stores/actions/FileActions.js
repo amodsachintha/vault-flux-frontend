@@ -2,7 +2,7 @@ import FileActionTypes from '../action_types/FileActionTypes'
 import dispatcher from '../../Dispatcher';
 import axios from 'axios';
 import config from '../../config';
-import { saveAs } from 'file-saver';
+import {saveAs} from 'file-saver';
 
 const fetchFilesFromVault = () => {
     dispatcher.dispatch({
@@ -62,9 +62,27 @@ const downloadFileFromVault = (index) => {
 
 };
 
+const deleteFile = (fileId) => {
+    dispatcher.dispatch({
+        type: FileActionTypes.DELETE_FILE_REQUEST
+    });
+    const url = `${config.host}:${config.port}/delete/${fileId}`;
+    const token = localStorage.getItem('token') || 'none';
+    axios.get(url, {headers: {'X-TOKEN': token}}).then(res => {
+        dispatcher.dispatch({
+            type: FileActionTypes.DELETE_FILE_SUCCESS,
+        });
+        fetchFilesFromVault();
+    }).catch(e => {
+        dispatcher.dispatch({
+            type: FileActionTypes.DELETE_FILE_FAIL
+        });
+    })
+};
 
 export default {
     fetchFilesFromVault,
     fetchFileDetailsFromVault,
-    downloadFileFromVault
+    downloadFileFromVault,
+    deleteFile
 }

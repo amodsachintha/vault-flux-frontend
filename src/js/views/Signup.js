@@ -19,7 +19,7 @@ export default class Signup extends React.Component {
     }
 
     handleSignupButtonClick() {
-        let {name, username, password} = this.state;
+        let { name, username, password } = this.state;
         if (name.length >= 3 && username.length >= 4 && password.length >= 6) {
             const url = `${config.host}:${config.port}/register`;
             axios.post(url, {...this.state}).then(res => {

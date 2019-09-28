@@ -8,7 +8,7 @@ class FileBrowser extends Component {
     }
 
     render() {
-        const {onFetchFileDetailsFromVault, onDownloadFileFromVault} = this.props;
+        const {onFetchFileDetailsFromVault, onDownloadFileFromVault, onDeleteFile} = this.props;
         let {files, isLoading} = this.props.fileStore;
         let {selectedFile} = this.props.selectedFileStore;
         console.log(files);
@@ -19,7 +19,7 @@ class FileBrowser extends Component {
                     <Table.Body>
                         {files.map(file => <FileRow key={file.index} {...file}
                                                     clickHandler={onFetchFileDetailsFromVault}
-                                                    downloadHandler={onDownloadFileFromVault} sf={selectedFile}/>)}
+                                                    downloadHandler={onDownloadFileFromVault} sf={selectedFile} deleteHandler={onDeleteFile} />)}
                     </Table.Body>
                     <Table.Footer>
                         <Table.Row>
@@ -87,6 +87,8 @@ const FileRow = (props) => {
         color = selectedFileId === props.index ? '#2C3E50' : '#808B96';
         fontWeight = selectedFileId === props.index ? 'bold' : 'normal';
     }
+    const {deleteHandler} = props;
+
     return (
         <Table.Row>
             <Table.Cell textAlign='left'>
@@ -104,7 +106,11 @@ const FileRow = (props) => {
             <Table.Cell textAlign='center'>
                 <Icon onClick={() => props.downloadHandler(props.index)} name='download' color={'blue'} link disabled={!positive}/>
                 <Icon onClick={() => {}} name='share alternate' color={'green'} link />
-                <Icon onClick={() => { console.log(`Delete ${props.file.fileName}`) }} name='trash alternate outline' color={'red'} link />
+                <Icon onClick={() => {
+                    if(window.confirm(`Are you sure? This is irreversible`)){
+                        deleteHandler(props.fileId);
+                    }
+                }} name='trash alternate outline' color={'red'} link />
             </Table.Cell>
         </Table.Row>
     )
