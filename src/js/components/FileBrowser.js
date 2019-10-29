@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Table, Icon, List, Segment, Dimmer, Loader, Image} from 'semantic-ui-react';
+import ShareModal from './ShareModal';
 
 class FileBrowser extends Component {
 
@@ -11,15 +12,16 @@ class FileBrowser extends Component {
         const {onFetchFileDetailsFromVault, onDownloadFileFromVault, onDeleteFile} = this.props;
         let {files, isLoading} = this.props.fileStore;
         let {selectedFile} = this.props.selectedFileStore;
-        console.log(files);
+        console.log('ggghh', files);
         if (files.length && !isLoading) {
             return (
                 <Table basic style={{'width': '100%'}}>
-                    <FilesTableHeader />
+                    <FilesTableHeader/>
                     <Table.Body>
                         {files.map(file => <FileRow key={file.index} {...file}
                                                     clickHandler={onFetchFileDetailsFromVault}
-                                                    downloadHandler={onDownloadFileFromVault} sf={selectedFile} deleteHandler={onDeleteFile} />)}
+                                                    downloadHandler={onDownloadFileFromVault} sf={selectedFile}
+                                                    deleteHandler={onDeleteFile}/>)}
                     </Table.Body>
                     <Table.Footer>
                         <Table.Row>
@@ -60,7 +62,7 @@ const FilesTableHeader = () => {
     return (
         <Table.Header>
             <Table.Row>
-                <Table.HeaderCell >
+                <Table.HeaderCell>
                     Name
                 </Table.HeaderCell>
                 {/*<Table.HeaderCell textAlign='center'>*/}
@@ -79,6 +81,7 @@ const FilesTableHeader = () => {
 
 const FileRow = (props) => {
     // let positive = ((props.health.aparts / props.health.tparts) > 0.6);
+    let {state} = props;
     let positive = true;
     let selectedFileId = props.sf.index;
     let color = '#808B96';
@@ -95,7 +98,8 @@ const FileRow = (props) => {
                 <List link>
                     <List.Item as='a' onClick={() => props.clickHandler(props.index)}
                                style={{'color': color, 'fontWeight': fontWeight}}>
-                        {getIcon(props.file.mimeType)} {props.file.fileName}
+                        <span>{state === 'SHARED' ? <Icon
+                            name='square share'/> : getIcon(props.file.mimeType)}</span><span>{props.file.fileName}</span>
                     </List.Item>
                 </List>
             </Table.Cell>
@@ -104,13 +108,15 @@ const FileRow = (props) => {
             {/*</Table.Cell>*/}
             <Table.Cell textAlign='center'>{Math.round(props.file.fileSize / (1024 * 1024))} MB</Table.Cell>
             <Table.Cell textAlign='center'>
-                <Icon onClick={() => props.downloadHandler(props.index)} name='download' color={'blue'} link disabled={!positive}/>
-                <Icon onClick={() => {}} name='share alternate' color={'green'} link />
+                <Icon onClick={() => props.downloadHandler(props.index)} name='download' color={'blue'} link
+                      disabled={!positive}/>
+                {state === 'STORED' ?
+                    <ShareModal btn={<Icon name='share alternate' color={'green'} link/>} fileID={props.fileId}/> : ''}
                 <Icon onClick={() => {
-                    if(window.confirm(`Are you sure? This is irreversible`)){
+                    if (window.confirm(`Are you sure? This is irreversible`)) {
                         deleteHandler(props.fileId);
                     }
-                }} name='trash alternate outline' color={'red'} link />
+                }} name='trash alternate outline' color={'red'} link/>
             </Table.Cell>
         </Table.Row>
     )

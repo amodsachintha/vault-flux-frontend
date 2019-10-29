@@ -19,17 +19,20 @@ export default class Signup extends React.Component {
     }
 
     handleSignupButtonClick() {
-        let { name, username, password } = this.state;
+        let {name, username, password} = this.state;
         if (name.length >= 3 && username.length >= 4 && password.length >= 6) {
             const url = `${config.host}:${config.port}/register`;
             axios.post(url, {...this.state}).then(res => {
                 console.log(res.data);
-                localStorage.setItem('token',res.data.token);
-                toast.success(`Logged in as ${res.data.user.username}`)
+                // localStorage.setItem('token',res.data.token);
+                toast.success(`Registered as ${res.data.user.username}`);
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 3000)
             }).catch(e => {
-                if (e.response.data.msg)
+                if (e.response.data.msg) {
                     toast.error(e.response.data.msg);
-                else
+                } else
                     toast.error('Undefined error!');
             });
         } else {
@@ -57,7 +60,7 @@ export default class Signup extends React.Component {
                         <Segment basic>
                             <Image src={'/images/vault_wording.png'} centered size='small'/>
                             <Segment>
-                                <Header style={{textAlign:"center"}}>Signup</Header>
+                                <Header style={{textAlign: "center"}}>Signup</Header>
                                 <Form size="large">
                                     <Form.Input
                                         label="Name"

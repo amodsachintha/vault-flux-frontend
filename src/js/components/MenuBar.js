@@ -24,7 +24,6 @@ class MenuBar extends Component {
                 <Menu.Item name='diskhealth' as='a' href={'/health'}/>
 
                 <Menu.Menu position='right'>
-                    <Menu.Item name='about' as='a'/>
                     <Menu.Item><Button negative name='Logout' onClick={this.handleLogout} >Logout</Button></Menu.Item>
                 </Menu.Menu>
             </Menu>
